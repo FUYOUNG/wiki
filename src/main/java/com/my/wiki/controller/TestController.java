@@ -1,12 +1,13 @@
 package com.my.wiki.controller;
 
 import com.my.wiki.service.TestService;
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.my.wiki.domain.Test;
+
+import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
