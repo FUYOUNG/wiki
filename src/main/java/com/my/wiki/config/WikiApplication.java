@@ -18,7 +18,7 @@ public class WikiApplication {
         SpringApplication app= new SpringApplication(WikiApplication.class);
         Environment env=app.run(args).getEnvironment();
         LOG.info("启动成功");
-        LOG.info("地址:\thttp://127.0.0.1:8080");
+        LOG.info("地址:\thttp://127.0.0.1:8880");
     }
 
 }
