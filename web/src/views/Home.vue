@@ -3,8 +3,6 @@
     <a-layout-sider width="200" style="background: #fff">
       <a-menu
           mode="inline"
-          v-model:selectedKeys="selectedKeys2"
-          v-model:openKeys="openKeys"
           :style="{ height: '100%', borderRight: 0 }"
       >
         <a-sub-menu key="sub1">
@@ -45,17 +43,32 @@
         </a-sub-menu>
       </a-menu>
     </a-layout-sider>
-    <a-layout-content
+    <a-layout style="padding: 0 24px 24px">
+      <a-layout-content
         :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
-      <pre>
-        {{ebooks}}
-        {{ebooks2}}
-      </pre>
+      <a-list item-layout="vertical" size="large" :grid="{ gutter: 20, column: 3 }" :data-source="ebooks">
+        <template #renderItem="{ item }">
+          <a-list-item key="item.name">
+            <template #actions>
+              <span v-for="{type,text} in actions" :key="type">
+                <component v-bind:is="type" style="margin-right: 8px" />
+                {{ text }}
+              </span>
+            </template>
+            <a-list-item-meta :description="item.description">
+              <template #title>
+                <a :href="item.href">{{item.name}}</a>
+              </template>
+              <template #avatar><a-avatar :src="item.avatar"/></template>
+            </a-list-item-meta>
+          </a-list-item>
+        </template>
+      </a-list>
     </a-layout-content>
+    </a-layout>
   </a-layout>
 </template>
-
 <script lang="ts">
 import { defineComponent,onMounted,ref,reactive,toRef} from 'vue';
 import axios from "axios"
@@ -69,7 +82,7 @@ export default defineComponent({
     const ebooks1=reactive({books:[]});
 
     onMounted(()=>{
-      axios.get("http://localhost:8880/ebook/list?name=Spring").then(
+      axios.get("http://localhost:8880/ebook/list").then(
           (response)=>{
             const data=response.data;
             ebooks.value= data.content;
@@ -79,8 +92,32 @@ export default defineComponent({
     })
     return {
       ebooks,
-      ebooks2:toRef(ebooks1,"books")
+      ebooks2:toRef(ebooks1,"books"),
+        actions: [
+          { type: 'StarOutlined', text: '156' },
+          { type: 'LikeOutlined', text: '156' },
+          { type: 'MessageOutlined', text: '2' },
+        ],
     };
   }
 });
 </script>
+
+<style>
+#components-layout-demo-top-side-2 .logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.ant-row-rtl #components-layout-demo-top-side-2 .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
+
+.site-layout-background {
+  background: #fff;
+}
+</style>
