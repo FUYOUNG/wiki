@@ -77,12 +77,12 @@ export default defineComponent({
   name: 'Home',
 
   setup(){
-    console.log("setup");
+    console.log("setup1");
     const ebooks=ref();
     const ebooks1=reactive({books:[]});
 
     onMounted(()=>{
-      axios.get("http://localhost:8880/ebook/list").then(
+      axios.get(process.env.VUE_APP_SERVER+"/ebook/list").then(
           (response)=>{
             const data=response.data;
             ebooks.value= data.content;
